@@ -52,6 +52,7 @@ public class Shooting : PlayerAct
     {
         if(CurrentAmmo < MaxAmmo) 
         {
+        SoundSpawner.Instance.Spawn(CONSTSoundsName.Reload,Vector3.zero,Quaternion.identity);
         reloadtimer = Reloadtime;
         Reloadgate = true;
         Debug.Log(this.transform.parent + "Reloading");
@@ -61,8 +62,7 @@ public class Shooting : PlayerAct
     {
         if(CurrentAmmo <= 0 && Reloadgate == false ) 
         {
-        Reloadgate = true;
-        reloadtimer = Reloadtime;
+            this.Reloading();
         }
     }
     protected virtual void Getbulletdata()

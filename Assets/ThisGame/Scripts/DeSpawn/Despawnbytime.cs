@@ -5,7 +5,7 @@ using UnityEngine;
 public class Despawnbytime : Despawn
 {
     protected float Timer;
-    [SerializeField] protected float DespawnTime;
+    [SerializeField] public float DespawnTime;
     protected override bool CanDeSpawn()
     {
         Timer += Time.deltaTime * 1f;

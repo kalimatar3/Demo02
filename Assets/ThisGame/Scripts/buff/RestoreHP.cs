@@ -9,6 +9,7 @@ public class RestoreHP : BufftoPlayer
         PlayerReciver playerReciver =  obj.transform.GetComponent<PlayerReciver>();
         if(playerReciver == null) return;
         playerReciver.RestoreHp(this.dealnumber);
+        SoundSpawner.Instance.Spawn(CONSTSoundsName.Healing,Vector3.zero,Quaternion.identity);
         base.SendDametoObj(obj);
     }
 }

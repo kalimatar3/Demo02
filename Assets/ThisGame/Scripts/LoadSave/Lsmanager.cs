@@ -24,7 +24,7 @@ public class Lsmanager : MyBehaviour
     {
         return Lsmanager.SAVE + "_" + name;
     }
-    protected virtual void LoadGameData()
+    public virtual void LoadGameData()
     {        
         string JsonString = SaveSystem.GetString(this.GetSaveName("DataManager"));
         DataManager.Instance.PlayerDataFromJson(JsonString);

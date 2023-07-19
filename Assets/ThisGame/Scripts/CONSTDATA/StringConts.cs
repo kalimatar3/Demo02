@@ -10,5 +10,5 @@ public static class StringConts
     public static string Enemies02Anim = "Enemies02State";
     public static string PlayerMoveAnim = "PlayerMove";
     public static string PlayerFireAnim = "PlayerFire";
-    public static string PlayerDieAnim = "PlayerDie";
+    public static string PlayerIsDead = "PlayDead";
 }

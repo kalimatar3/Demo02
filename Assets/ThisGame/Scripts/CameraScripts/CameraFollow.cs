@@ -33,6 +33,8 @@ public class CameraFollow : followObj
     {
         Vector3 Direction = (Obj.transform.position - this.transform.parent.position).normalized;
         this.transform.parent.forward = Direction;
+        Vector3 newPos = Vector3.Lerp(this.transform.parent.position, Obj.transform.position - Direction * 20 , this.smooth * Time.deltaTime);
+        this.transform.parent.position = newPos;
     }
     public virtual void Forcus(Transform obj,float time)
     {

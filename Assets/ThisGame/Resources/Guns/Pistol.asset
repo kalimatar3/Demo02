@@ -34,3 +34,11 @@ MonoBehaviour:
     Firerate: 0.1
     MaxAmmo: 33
     Reloadtime: 1
+  - Cost: 1
+    Firerate: 0.1
+    MaxAmmo: 33
+    Reloadtime: 1
+  - Cost: 1
+    Firerate: 0.1
+    MaxAmmo: 33
+    Reloadtime: 1

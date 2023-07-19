@@ -19,6 +19,7 @@ public class EnemiesReciver : DameReciver
     {
         base.Dying();
         EnemiesSpawner.Instance.DeSpawnToPool(this.transform.parent);
+        EffectSpawner.Instance.Spawn("DieExplosion",this.transform.position,this.transform.rotation);
         this.EnemieCtrl.SpawnDropItem.spawnBuff();
     }
 }

@@ -12,6 +12,7 @@ public class DameUp : BufftoPlayer
         base.Awake();
         if(instance != null && instance != this)
         {
+            //
         }
         else instance = this;
     }
@@ -26,6 +27,7 @@ public class DameUp : BufftoPlayer
         BuffManager.Instance.CurrentBuff =this.transform.parent;
         playerReciver.playerController.GunCtrl.Shooting.BoostValue = this.dealnumber;
         playerReciver.playerController.GunCtrl.Shooting.BoostTime = this.DameUptime;
+        SoundSpawner.Instance.Spawn(CONSTSoundsName.DameUp,Vector3.zero,Quaternion.identity);
         base.SendDametoObj(obj);
     }
 }

@@ -38,10 +38,12 @@ public class ButtonScript : MyBehaviour
     public void UpdatePlayer()
     {
         DataManager.Instance.IcrMaxHp();
+        this.Reborn();
     }
     public void UpdateGun()
     {
         DataManager.Instance.IcrMaxbullet();
+        this.Reborn();
     }
     public void UpdateCoin()
     {
@@ -52,8 +54,9 @@ public class ButtonScript : MyBehaviour
         GunCtrl.Instance.Shooting.reborn();
         PlayerController.Instance.PlayerReciver.ReBorn();
     }
-    public void Revise()
+    public void Revive()
     {
+        SoundSpawner.Instance.Spawn(CONSTSoundsName.Revive,Vector3.zero,Quaternion.identity);
         PlayerController.Instance.PlayerReciver.canRevise();
         this.Reborn();
     }
@@ -113,10 +116,12 @@ public class ButtonScript : MyBehaviour
     }
     public void InvulnerablePlayer()
     {
+        SoundSpawner.Instance.Spawn(CONSTSoundsName.Invulnerable,Vector3.zero,Quaternion.identity);
         PlayerController.Instance.PlayerReciver.invulnerable();
     }
     public void  GetCurrentButton(RectTransform obj)
     {
+        SoundSpawner.Instance.Spawn(CONSTSoundsName.ButtonTap,Vector3.zero,Quaternion.identity);
         if(!obj.gameObject.activeInHierarchy)
         {
             this.Currentbutton = null;
@@ -128,7 +133,6 @@ public class ButtonScript : MyBehaviour
     {
         if(Currentbutton == null) return;
         this.BuyButtonState();
-        this.SelectButtonFrameState();
         this.SelectButtonState();
     }
     protected void BuyButtonState()
@@ -137,6 +141,7 @@ public class ButtonScript : MyBehaviour
         {
             if(locked.name == Currentbutton.name)
             {
+                SelectButtonFrameState();
                 BuyButton.gameObject.SetActive(locked.gameObject.activeInHierarchy);
                 return;
             }
@@ -155,6 +160,7 @@ public class ButtonScript : MyBehaviour
         {
             if(locked.name == Currentbutton.name)
             {
+               SelectButtonFrameState();
                 Canselectbutton.gameObject.SetActive(locked.gameObject.activeInHierarchy);
                 return;
             }

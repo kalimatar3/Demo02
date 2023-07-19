@@ -12,7 +12,7 @@ public class SpeedUp : BufftoPlayer
         base.Awake();
         if(instance != null && instance != this)
         {
-            Debug.LogWarning(this.gameObject + "Existed");
+          //  Debug.LogWarning(this.gameObject + "Existed");
         }
         else instance = this;
     }
@@ -28,6 +28,7 @@ public class SpeedUp : BufftoPlayer
         BuffManager.Instance.CurrentBuff = this.transform.parent;
         playerReciver.playerController.PlayerMoving.BoostValue = dealnumber;
         playerReciver.playerController.PlayerMoving.BoostTime = SpeedUptime;
+        //SoundSpawner.Instance.Spawn(CONSTSoundsName.spee)
         base.SendDametoObj(obj);
     }
 }

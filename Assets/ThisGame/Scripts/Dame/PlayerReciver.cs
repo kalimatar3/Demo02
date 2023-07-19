@@ -9,8 +9,8 @@ public class PlayerReciver : DameReciver
     [SerializeField] protected float InvulnerableNumber;
     [SerializeField] protected float CurinvulnerableNumber;
     [SerializeField] protected bool CanRevise;
-    protected bool PanelGate;
     [SerializeField] protected float timer,delaytime;
+    protected bool PanelGate,CanTakeDame;
     protected override void LoadComponents()
     {
         base.LoadComponents();
@@ -20,7 +20,7 @@ public class PlayerReciver : DameReciver
     protected override void Start()
     {
         base.Start();
-        StartCoroutine(this.FakeUpdate());
+        StartCoroutine(this.TakeDameDelay());
     }
     protected void LoadPlayerCtrl()
     {
@@ -41,7 +41,7 @@ public class PlayerReciver : DameReciver
                 if(!PanelGate)
                 {
                     PanelGate = true;
-                    PanelCtrl.Instance.ShowPanel("RevisePannel");
+                    PanelCtrl.Instance.ShowPanel("RevivePannel");
                     PanelCtrl.Instance.HirePanel("GameplayPanel");
                 }
             }
@@ -62,19 +62,32 @@ public class PlayerReciver : DameReciver
     }
     public override void DeductHp(float dame)
     {
-        if(CurinvulnerableNumber > 0)
+        if(CanTakeDame)
         {
-            CurinvulnerableNumber --;
-            return;
+            CanTakeDame = false;
+            timer = 0;
+            if(CurinvulnerableNumber > 0)
+            {
+                CurinvulnerableNumber --;
+            }
+            else
+            {
+                PanelCtrl.Instance.ShowPanel("TakeDamePanel");
+                SoundSpawner.Instance.Spawn(CONSTSoundsName.Attacked,Vector3.zero,Quaternion.identity);
+                base.DeductHp(dame);
+            }
+        StartCoroutine(TakeDameDelay());
         }
-        base.DeductHp(dame);
     }
-    protected IEnumerator FakeUpdate()
+    protected IEnumerator TakeDameDelay()
     {
-        while(1==1)
+        while(CanTakeDame == false)
         {
-        yield return timer += Time.deltaTime * 1f;
-        if(timer > delaytime) timer = 0;
+            yield return timer += Time.deltaTime * 1f;
+            if(timer > delaytime) 
+            {
+                CanTakeDame = true;
+            }
         }
     }
 }

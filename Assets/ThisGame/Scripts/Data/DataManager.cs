@@ -290,6 +290,7 @@ public class DataManager : MyBehaviour
         this.DcrGold(GetCost(UpgradeabledataName.IcreCoinCost.ToString()));
         this.UpgradefromUGAD(UpgradeabledataName.IcreCoinCost.ToString());
         this.UpgradefromDID("Coin");
+        SoundSpawner.Instance.Spawn(CONSTSoundsName.Upgrade,Vector3.zero,Quaternion.identity);
         Lsmanager.Instance.SaveGame();
     }
 
@@ -298,6 +299,7 @@ public class DataManager : MyBehaviour
         if(!CanPayGold(GetCost(UpgradeabledataName.IcreMaxHPCost.ToString()))) return;
         this.DcrGold(GetCost(UpgradeabledataName.IcreMaxHPCost.ToString()));
         this.UpgradefromUGAD(UpgradeabledataName.IcreMaxHPCost.ToString());
+        SoundSpawner.Instance.Spawn(CONSTSoundsName.Upgrade,Vector3.zero,Quaternion.identity);
         Lsmanager.Instance.SaveGame();
     }
     public virtual void IcrMaxbullet()
@@ -305,6 +307,7 @@ public class DataManager : MyBehaviour
         if(!CanPayGold(GetCost(UpgradeabledataName.IcreMaxbulletPistolCost.ToString()))) return;
         this.DcrGold(GetCost(UpgradeabledataName.IcreMaxbulletPistolCost.ToString()));
         this.UpgradefromUGAD(UpgradeabledataName.IcreMaxbulletPistolCost.ToString());
+        SoundSpawner.Instance.Spawn(CONSTSoundsName.Upgrade,Vector3.zero,Quaternion.identity);
         Lsmanager.Instance.SaveGame();
     }
     public virtual void PlayerDataFromJson(string JsonString)

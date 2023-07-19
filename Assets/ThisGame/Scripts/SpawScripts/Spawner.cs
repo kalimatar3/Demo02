@@ -12,7 +12,7 @@ public abstract class Spawner : MyBehaviour
         base.LoadComponents();
         this.LoadPrefabs();
     }
-    protected void LoadPrefabs()
+    protected virtual void LoadPrefabs()
     {
         if(this.prefabs.Count > 0 ) return;
         Transform PrefapObj = transform.Find("Prefabs");

@@ -33,6 +33,7 @@ public class Lazer : EnemieAct
             LineRenderer.SetPosition(1,obj.point);
             if(lazergate)
             {
+                SoundSpawner.Instance.Spawn(CONSTSoundsName.Lazer,Vector3.zero,Quaternion.identity);
                 lazergate = false;
                 this.DamePoint =  EnemieActSpawner.Instance.Spawn(EnemieActSpawner.ActEnum.LazerHit.ToString(),obj.point,Quaternion.identity);
                 DamePoint.GetComponentInChildren<DespawnLazerHit>().Obj = this.transform.parent;

@@ -5,20 +5,27 @@ public class PlayerMoving : MyBehaviour
 {
 [SerializeField] protected Rigidbody Mybody; 
 [SerializeField] protected float DefaultPlayerMovingSpeed;
+[SerializeField] protected float FirePLayerMovingSpeed;
 [SerializeField] protected PlayerController playerController;
 [HideInInspector] public Vector3 Move; 
 [HideInInspector] public float BoostValue,BoostTime;
 [SerializeField] protected float CurrentSpeed;
-protected float Timer,ExtraSpeed;
+protected float Timer,ExtraSpeed,soundtimer;
 public bool CanSpeedUp;
     protected virtual void Moving()
     {
-        CurrentSpeed = DefaultPlayerMovingSpeed * (1+ExtraSpeed);
-        //this.Move = new Vector3 (Input.GetAxisRaw("Horizontal") * CurrentSpeed, this.Mybody.velocity.y ,Input.GetAxisRaw("Vertical") * CurrentSpeed);
+        soundtimer += Time.deltaTime * 1f;
+        CurrentSpeed = DefaultPlayerMovingSpeed * ( 1 + ExtraSpeed);
         this.Move = new Vector3 (InputManager.Instance.MovingJoystick.Horizontal * CurrentSpeed, this.Mybody.velocity.y , InputManager.Instance.MovingJoystick.Vertical * CurrentSpeed);
         this.Mybody.velocity = Move;
+        if(Move.magnitude >= 1 && soundtimer > 0.4f)
+        {
+            soundtimer = 0;
+             SoundSpawner.Instance.Spawn(CONSTSoundsName.PlayerMoving,Vector3.zero,Quaternion.identity);
+        } 
         if(InputManager.Instance.MovingJoystick.Horizontal != 0 || InputManager.Instance.MovingJoystick.Vertical != 0)
         {
+            CurrentSpeed = FirePLayerMovingSpeed * (1 + ExtraSpeed);
             this.transform.parent.rotation =  Quaternion.LookRotation(Mybody.velocity);
         }
     }

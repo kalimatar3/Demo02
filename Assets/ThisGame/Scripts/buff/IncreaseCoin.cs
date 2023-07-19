@@ -16,7 +16,7 @@ public class IncreaseCoin : BufftoPlayer
     {
         yield return new WaitUntil(predicate : () =>
         {
-            thisrotation.z = ((int)thisrotation.z + 2) % 5 ;
+            thisrotation.z = ((int)thisrotation.z + 1) % 3 ;
             this.transform.parent.GetChild(0).rotation = thisrotation;
             this.transform.parent.Translate(Vector3.up * Time.deltaTime * 1f * 10);
             if(this.transform.parent.position.y < 5) return false;

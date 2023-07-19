@@ -5,8 +5,9 @@ using UnityEngine;
 public class PlayerAnimation : MyBehaviour
 {
     [SerializeField] protected PlayerController playerController;
-    protected float MoveAnim;
     [SerializeField] protected Animator PlayerAnimator;
+    protected float MoveAnim;
+    protected bool IsDeadAnim;
     protected override void LoadComponents()
     {
         base.LoadComponents();
@@ -19,9 +20,14 @@ public class PlayerAnimation : MyBehaviour
     }
     protected void Update()
     {
+        if(playerController.PlayerReciver.CurrentHp <= 0)
+        {
+            IsDeadAnim = true;
+        }
         this.MoveAnim = playerController.PlayerMoving.Move.magnitude;
         Vector3 GunDirection = new Vector3 (InputManager.Instance.Shootingstick.Horizontal,0 ,InputManager.Instance.Shootingstick.Vertical);
         PlayerAnimator.SetFloat(StringConts.PlayerFireAnim,GunDirection.magnitude);
+        PlayerAnimator.SetBool(StringConts.PlayerIsDead,IsDeadAnim);
         PlayerAnimator.SetFloat(StringConts.PlayerMoveAnim,MoveAnim);
     }
 }
