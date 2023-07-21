@@ -9,6 +9,8 @@ public class RestoreHP : BufftoPlayer
         PlayerReciver playerReciver =  obj.transform.GetComponent<PlayerReciver>();
         if(playerReciver == null) return;
         playerReciver.RestoreHp(this.dealnumber);
+        Transform speedupeffect = EffectSpawner.Instance.Spawn("HealingEffect",this.transform.parent.position,this.transform.parent.rotation);
+        speedupeffect.GetComponentInChildren<EffectDespawn>().DespawnTime = 3f;
         SoundSpawner.Instance.Spawn(CONSTSoundsName.Healing,Vector3.zero,Quaternion.identity);
         base.SendDametoObj(obj);
     }

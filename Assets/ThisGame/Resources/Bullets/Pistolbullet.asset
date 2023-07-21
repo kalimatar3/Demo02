@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948740055e3567e46881a94f462fa7bd, type: 3}
   m_Name: Pistolbullet
   m_EditorClassIdentifier: 
-  Dame: 1
+  Dame: 30
+  CanThroughObj: 0

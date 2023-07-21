@@ -9,6 +9,7 @@ public class IncreaseCoin : BufftoPlayer
     {
         PlayerReciver playerReciver =  obj.transform.GetComponent<PlayerReciver>();
         if(playerReciver == null) return;
+        SoundSpawner.Instance.Spawn(CONSTSoundsName.PickCoin,Vector3.zero,Quaternion.identity);
         DataManager.Instance.IcrGold((int)dealnumber);
         StartCoroutine(DelayDeSpawn(obj));
     }

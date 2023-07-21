@@ -56,9 +56,13 @@ public class ButtonScript : MyBehaviour
     }
     public void Revive()
     {
-        SoundSpawner.Instance.Spawn(CONSTSoundsName.Revive,Vector3.zero,Quaternion.identity);
         PlayerController.Instance.PlayerReciver.canRevise();
+        SoundSpawner.Instance.Spawn(CONSTSoundsName.Revive,Vector3.zero,Quaternion.identity);
         this.Reborn();
+    }
+    public void Replay()
+    {
+        PlayerController.Instance.PlayerReciver.Replay();
     }
     public void Reload()
     {
@@ -68,21 +72,6 @@ public class ButtonScript : MyBehaviour
     {
         GunCtrl.Instance.ChangeWepon();
     }
-    public void Replay()
-    {
-        StartCoroutine(DelayReplay());
-    }
-    protected void Replaying()
-    {
-       SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-    protected IEnumerator DelayReplay()
-    {
-        PanelCtrl.Instance.HirePanel("RevisePannel");
-        PanelCtrl.Instance.ShowPanel("GameOverPanel");
-        yield return new WaitForSeconds(1f);
-        this.Replaying();
-    } 
     public void LoadMap(Transform obj)
     {
         DataManager.Instance.CurrentMap = DataManager.Instance.GetReferanceName(obj);

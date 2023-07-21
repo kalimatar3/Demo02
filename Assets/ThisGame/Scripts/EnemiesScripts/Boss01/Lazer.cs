@@ -5,18 +5,27 @@ using UnityEngine;
 public class Lazer : EnemieAct
 {
     [SerializeField] protected float PreShootTime,ShootingTime;
-    [SerializeField] protected LayerMask PlayerLayer;
+    [SerializeField] protected LayerMask LazerCanHit;
     [SerializeField] protected Transform TarGet;
     protected Transform DamePoint;
-    protected LineRenderer LineRenderer;
+    protected LineRenderer Laser;
     protected RaycastHit obj;
     protected float Shoottimer;
     protected bool lazergate;
     protected bool test;
+
+
+    public float MaxLength;
+    public float MainTextureLength = 1f;
+    public float NoiseTextureLength = 1f;
+    private Vector4 Length = new Vector4(1,1,1,1);
+    private ParticleSystem[] Effects;
+
     protected override void Start()
     {
         base.Start();
-        LineRenderer = GetComponent<LineRenderer>();
+        Laser = GetComponent<LineRenderer>();
+        Effects = GetComponentsInChildren<ParticleSystem>();
     }
     protected void LockTarget()
     {
@@ -24,13 +33,13 @@ public class Lazer : EnemieAct
     }
     protected void lazering()
     { 
-        LineRenderer.positionCount = 2;
+        Laser.positionCount = 2;
         Vector3 Origin = this.transform.position;
         Vector3 Direction = (TarGet.transform.position - Origin);
-        LineRenderer.SetPosition(0,Origin);
-        if(Physics.Raycast(Origin,Direction,out obj,Direction.normalized.magnitude * 50f,PlayerLayer))
+        Laser.SetPosition(0,Origin);
+        if(Physics.Raycast(Origin,Direction,out obj,Direction.normalized.magnitude * 50f,LazerCanHit))
         {
-            LineRenderer.SetPosition(1,obj.point);
+            Laser.SetPosition(1,obj.point);
             if(lazergate)
             {
                 SoundSpawner.Instance.Spawn(CONSTSoundsName.Lazer,Vector3.zero,Quaternion.identity);
@@ -46,7 +55,7 @@ public class Lazer : EnemieAct
         if(timer <= timerate) 
         {
             Shoottimer = 0;
-            this.LineRenderer.positionCount = 0 ;
+            this.Laser.positionCount = 0 ;
             if(DamePoint != null) EnemieActSpawner.Instance.DeSpawnToPool(this.DamePoint);
         } 
         if(gate) timer += Time.deltaTime * 1f;
@@ -71,6 +80,7 @@ public class Lazer : EnemieAct
     }
     protected override void Action()
     {
+        Laser.material.SetTextureScale("_MainTex", new Vector2(Length[0], Length[1]));                    
         this.TimeController();
         base.Action();
     }    

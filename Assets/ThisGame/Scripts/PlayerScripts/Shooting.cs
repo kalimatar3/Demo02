@@ -114,7 +114,11 @@ public class Shooting : PlayerAct
                 BuffManager.Instance.CurrentBuff = null;
             }
         }
-        else ExtraDame = 0;
+        else 
+        {
+            this.Timer = 0;
+            ExtraDame = 0;
+        }
     }
     protected override void Action()
     {

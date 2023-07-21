@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemiesName: Enemie_01
   SkillName: Punch
-  maxhp: 5
-  Dame: 1
+  maxhp: 100
+  Dame: 20
   ListDroprate:
   - 0
   - 50

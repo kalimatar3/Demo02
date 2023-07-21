@@ -24,9 +24,14 @@ public class DameUp : BufftoPlayer
     {
         PlayerReciver playerReciver =  obj.transform.GetComponent<PlayerReciver>();
         if(playerReciver == null) return;
-        BuffManager.Instance.CurrentBuff =this.transform.parent;
         playerReciver.playerController.GunCtrl.Shooting.BoostValue = this.dealnumber;
         playerReciver.playerController.GunCtrl.Shooting.BoostTime = this.DameUptime;
+
+        if(BuffManager.Instance.CurrentBuffEffect != null)  EffectSpawner.Instance.DeSpawnToPool(BuffManager.Instance.CurrentBuffEffect);
+        BuffManager.Instance.CurrentBuff = this.transform.parent;
+        BuffManager.Instance.CurrentBuffEffect = EffectSpawner.Instance.Spawn("DameUpEffect",this.transform.parent.position,this.transform.parent.rotation);
+        BuffManager.Instance.CurrentBuffEffect.GetComponentInChildren<EffectDespawn>().DespawnTime = DameUptime;
+
         SoundSpawner.Instance.Spawn(CONSTSoundsName.DameUp,Vector3.zero,Quaternion.identity);
         base.SendDametoObj(obj);
     }

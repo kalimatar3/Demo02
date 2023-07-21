@@ -6,14 +6,18 @@ public static class CONSTSoundsName
 {
     public static string Attacked = "Attacked",
     Reload = "Reload",
-    PlayerMoving = "Footstep",
+    PlayerMoving1 = "Footstep_1",
+    PlayerMoving2 = "Footstep_2",
     Upgrade = "Upgrade",
     Healing = "Healing",
     Lazer = "lazer",
     DameUp = "Damage up",
     Invulnerable ="Invulnerable" ,
+    Win = "Success",
+    BossDead = "Big Explosion 19",
     GameOver = "GameOver",
-    SpeedUp ="",
+    SpeedUp ="speedUp",
     ButtonTap = "ButtonTap",
+    PickCoin = "Coin",
     Revive = "Revive";
 }

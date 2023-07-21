@@ -8,6 +8,11 @@ public class ForcusCamera : MyBehaviour
     protected override void Start()
     {
         base.Start();
+        StartCoroutine(this.DelayStart());
+    }
+    protected IEnumerator DelayStart()
+    {
+        yield return new WaitForSeconds(0.5f);
         cameraFollow.Forcus(this.transform.parent,3f);
     }
 }

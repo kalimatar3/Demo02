@@ -6,6 +6,8 @@ public class CameraFollow : followObj
 {
     [SerializeField] protected Vector3 DefaultCamPOS,FireCamPOS,BossCamPOS;
     [SerializeField] protected Quaternion DefaultCamROS;
+    protected float timer;
+    protected Transform CacheObj;
     protected override void Start()
     {
         base.Start();
@@ -16,6 +18,7 @@ public class CameraFollow : followObj
         if(Obj == null) return;
         if(Obj == PlayerController.Instance.transform)
         {
+            timer = 0;
             Vector3 newPos = Vector3.Lerp(this.transform.parent.position, Obj.transform.position + DefaultCamPOS , this.smooth * Time.deltaTime);
             this.transform.parent.position = newPos;
             if(InputManager.Instance.Shootingstick.Horizontal !=0 ||InputManager.Instance.Shootingstick.Vertical != 0)

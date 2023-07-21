@@ -7,34 +7,53 @@ public class PlayerMoving : MyBehaviour
 [SerializeField] protected float DefaultPlayerMovingSpeed;
 [SerializeField] protected float FirePLayerMovingSpeed;
 [SerializeField] protected PlayerController playerController;
-[HideInInspector] public Vector3 Move; 
+public Vector3 Move; 
 [HideInInspector] public float BoostValue,BoostTime;
 [SerializeField] protected float CurrentSpeed;
 protected float Timer,ExtraSpeed,soundtimer;
-public bool CanSpeedUp;
-    protected virtual void Moving()
-    {
-        soundtimer += Time.deltaTime * 1f;
-        CurrentSpeed = DefaultPlayerMovingSpeed * ( 1 + ExtraSpeed);
-        this.Move = new Vector3 (InputManager.Instance.MovingJoystick.Horizontal * CurrentSpeed, this.Mybody.velocity.y , InputManager.Instance.MovingJoystick.Vertical * CurrentSpeed);
-        this.Mybody.velocity = Move;
-        if(Move.magnitude >= 1 && soundtimer > 0.4f)
-        {
-            soundtimer = 0;
-             SoundSpawner.Instance.Spawn(CONSTSoundsName.PlayerMoving,Vector3.zero,Quaternion.identity);
-        } 
-        if(InputManager.Instance.MovingJoystick.Horizontal != 0 || InputManager.Instance.MovingJoystick.Vertical != 0)
-        {
-            CurrentSpeed = FirePLayerMovingSpeed * (1 + ExtraSpeed);
-            this.transform.parent.rotation =  Quaternion.LookRotation(Mybody.velocity);
-        }
-    }
+protected bool LR;
     protected override void LoadComponents()
     {
         base.LoadComponents();
         this.LoadPlayerCtrl();
         this.Mybody = GetComponentInParent<Rigidbody>();
         if(Mybody == null) Debug.LogWarning("Can't Found Rigidbody");
+    }
+    protected virtual void Moving()
+    {
+        CurrentSpeed = DefaultPlayerMovingSpeed * ( 1 + ExtraSpeed);
+        this.Move = new Vector3 (InputManager.Instance.MovingJoystick.Horizontal * CurrentSpeed, this.Mybody.velocity.y , InputManager.Instance.MovingJoystick.Vertical * CurrentSpeed);
+        this.Mybody.velocity = Move;
+        if(InputManager.Instance.MovingJoystick.gameObject.activeInHierarchy) 
+        {
+            if(InputManager.Instance.MovingJoystick.Horizontal != 0 || InputManager.Instance.MovingJoystick.Vertical != 0)
+            {
+                this.transform.parent.rotation =  Quaternion.LookRotation(Mybody.velocity);
+            }
+        }
+        else 
+        {
+            this.Move = Vector3.zero;
+            this.Mybody.velocity = Vector3.zero;
+        }
+    }
+    protected void StepSound()
+    {
+        soundtimer += Time.deltaTime * 1f;
+        if(Move.magnitude >=1 && soundtimer > 4*1/CurrentSpeed)
+        {
+            soundtimer =0;
+            if(!LR) 
+            {
+                LR= true;
+                SoundSpawner.Instance.Spawn(CONSTSoundsName.PlayerMoving1,Vector3.zero,Quaternion.identity);
+            }
+            else
+            {
+                LR = false;
+                SoundSpawner.Instance.Spawn(CONSTSoundsName.PlayerMoving2,Vector3.zero,Quaternion.identity);
+            }
+        } 
     }
     protected void LoadPlayerCtrl()
     {
@@ -44,6 +63,7 @@ public bool CanSpeedUp;
     }
     protected void FixedUpdate()
     {
+        this.StepSound();
         this.Moving();
         this.BoostSpeed(BoostValue,BoostTime);
     }
@@ -58,8 +78,12 @@ public bool CanSpeedUp;
             {
                 this.Timer  = 0 ;
                 BuffManager.Instance.CurrentBuff.name = null;
+                BuffManager.Instance.CurrentBuffEffect = null;
             }
         }
-        else ExtraSpeed = 0;
+        else
+        {
+            ExtraSpeed = 0;
+        } 
     }
 }

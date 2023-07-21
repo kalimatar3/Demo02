@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class LevelManager : MyBehaviour
 {
     protected static LevelManager instance;
@@ -9,6 +9,7 @@ public class LevelManager : MyBehaviour
 
     [SerializeField] protected List<Transform> Listlevels;
     protected float timer;
+    [SerializeField] protected int CurrentLevel;
     [SerializeField] protected float preparetime;
     public int CEinCrlevel,NEinCrlevel;
     public string CrLevelname;
@@ -43,8 +44,10 @@ public class LevelManager : MyBehaviour
             if(level.gameObject.activeInHierarchy)
             {
                 this.CrLevelname = level.name;
-                CEinCrlevel = level.GetComponent<SpawnEnemies>().AllEnemieinlevel;
-                NEinCrlevel = level.GetComponent<SpawnEnemies>().MaxNumberofEnemies;
+                SpawnEnemies spawnEnemies = level.GetComponent<SpawnEnemies>();
+                if(spawnEnemies == null) return;
+                CEinCrlevel = spawnEnemies.AllEnemieinlevel;
+                NEinCrlevel = spawnEnemies.MaxNumberofEnemies;
                 if(CEinCrlevel > 0) return;
                 if(level.GetComponent<SpawnEnemies>() == null) return;
                foreach(Transform enemie in level.GetComponent<SpawnEnemies>().ListEnemies)
@@ -55,20 +58,10 @@ public class LevelManager : MyBehaviour
         if(timer > preparetime)
         {
             timer = 0;
-            this.ChangeLv();
-        }
-    }
-    protected void ChangeLv()
-    {
-        for(int i = 0; i < Listlevels.Count ; i++)
-        {
-            if(!Listlevels[(i + 1) % (Listlevels.Count)].gameObject.activeInHierarchy && Listlevels[i].gameObject.activeInHierarchy) 
-            {
-                Listlevels[(i + 1) % (Listlevels.Count)].gameObject.SetActive(true);
-                Listlevels[i].gameObject.SetActive(false);
-                Debug.Log(Listlevels[(i + 1) % (Listlevels.Count)].ToString() + " Start ");
-                return;
-            } 
+            foreach(Transform element in Listlevels)  element.gameObject.SetActive(false);
+            Listlevels[CurrentLevel].gameObject.SetActive(true);
+            CurrentLevel ++;
+            if(CurrentLevel >= Listlevels.Count)PanelCtrl.Instance.ShowPanel("Winpannel");
         }
     }
     protected void FixedUpdate()

@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class EffectSpawner : Spawner
 {
+    public List<Transform> Prefabs => base.prefabs;
     protected static EffectSpawner instance;
     public static EffectSpawner Instance { get => instance ;}
-    [SerializeField] protected List<string> Bulletname;
+    [SerializeField] protected List<string> EffectName;
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        this.LoadBulletName();
+        this.LoadEffectName();
     }
-    protected void LoadBulletName()
+    protected void LoadEffectName()
     {
         for(int  i = 0 ; i < prefabs.Count; i++)
         {
-            if(Bulletname.Count < prefabs.Count) Bulletname.Add("");
-            Bulletname[i] = prefabs[i].name;
+            if(EffectName.Count < prefabs.Count) EffectName.Add("");
+            EffectName[i] = prefabs[i].name;
         }
     }
     protected override void Awake()

@@ -6,7 +6,7 @@ public class BuffManager : MyBehaviour
 {    
     protected static BuffManager instance;
     public static BuffManager Instance { get => instance ;}
-    public Transform CurrentBuff;
+    public Transform CurrentBuff,CurrentBuffEffect;
     protected override void Awake()
     {
         base.Awake();

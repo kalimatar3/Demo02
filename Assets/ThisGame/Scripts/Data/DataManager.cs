@@ -239,7 +239,7 @@ public class DataManager : MyBehaviour
                 return element.Quality.Count;
             }
         }
-        return 99;
+        return 9999;
     }
 
     public int GetCost(string Name)
@@ -251,7 +251,7 @@ public class DataManager : MyBehaviour
                 return element.Cost[GetUpgradenumberfromUGAD(Name)];
             }
         }
-        return 100;
+        return 10000;
     }
     protected virtual void UpgradefromUGAD(string name)
     {

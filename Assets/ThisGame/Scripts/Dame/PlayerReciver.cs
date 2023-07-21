@@ -47,10 +47,28 @@ public class PlayerReciver : DameReciver
             }
             if(!CanRevise)
             {
-                ButtonScript.Instance.Replay();
+                PanelCtrl.Instance.HirePanel("GameplayPanel");
+                this.Replay();
             }
         } 
     }
+    public void Replay()
+    {
+        StartCoroutine(DelayReplayByGameOver());
+    }
+    protected void Replaying()
+    {
+       SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    protected IEnumerator DelayReplayByGameOver()
+    {
+        SoundSpawner.Instance.Spawn(CONSTSoundsName.GameOver,Vector3.zero,Quaternion.identity);
+        PanelCtrl.Instance.HirePanel("RevisePannel");
+        PanelCtrl.Instance.ShowPanel("GameOverPanel");
+        yield return new WaitForSeconds(3f);
+        this.Replaying();
+    } 
+
     public override void  ReBorn()
     {
         this.MaxHp = playerController.playerSO.PlayerUpgrade[DataManager.Instance.GetUpgradenumberfromUGAD(DataManager.UpgradeabledataName.IcreMaxHPCost.ToString())].MaxHp;
@@ -76,7 +94,7 @@ public class PlayerReciver : DameReciver
                 SoundSpawner.Instance.Spawn(CONSTSoundsName.Attacked,Vector3.zero,Quaternion.identity);
                 base.DeductHp(dame);
             }
-        StartCoroutine(TakeDameDelay());
+            StartCoroutine(TakeDameDelay());
         }
     }
     protected IEnumerator TakeDameDelay()

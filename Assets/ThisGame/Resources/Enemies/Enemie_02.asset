@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemiesName: Enemie_02
   SkillName: Explode
-  maxhp: 2
-  Dame: 5
+  maxhp: 50
+  Dame: 40
   ListDroprate:
   - 0
   - 50

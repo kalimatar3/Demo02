@@ -12,6 +12,7 @@ public class EnemieActSpawner : Spawner
         Punch,
         Explode,
         LazerHit,
+        BossPunch,
 
     }
     protected override void LoadComponents()

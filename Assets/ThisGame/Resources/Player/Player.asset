@@ -12,12 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0acc08706105cd146b916ecf88beaa56, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  Name: Player
-  Cost: 010000000200000003000000040000000500000006000000
   PlayerUpgrade:
-  - MaxHp: 10000
-  - MaxHp: 20
-  - MaxHp: 30
-  - MaxHp: 40
-  - MaxHp: 50
-  - MaxHp: 60
+  - MaxHp: 100
+  - MaxHp: 200
+  - MaxHp: 300
+  - MaxHp: 400
+  - MaxHp: 500
+  - MaxHp: 600

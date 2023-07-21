@@ -10,7 +10,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - RealObj
+  - LazerCanHit
   - Water
   - UI
   - Enemy
