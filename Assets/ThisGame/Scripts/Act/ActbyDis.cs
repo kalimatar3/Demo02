@@ -6,7 +6,7 @@ public class ActbyDis : Act
 {
     [SerializeField] protected float DisToAct;
     protected Transform Oritrans;
-    protected float Dis;
+    [SerializeField]protected float Dis;
     protected override bool CanDo()
     {
         if(Oritrans == null) return false;

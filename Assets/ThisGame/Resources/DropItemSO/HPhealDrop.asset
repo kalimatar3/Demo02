@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: HPheal
   Quality:
-  - 2
-  - 4
+  - 40
+  - 40

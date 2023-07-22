@@ -1,36 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class TrackPlayer : MyBehaviour
 {
     [SerializeField] protected float speed;
     [SerializeField] protected float stopDis;
-    [SerializeField] protected Rigidbody thisBody;
+    [SerializeField] protected NavMeshAgent thisNav; 
     public bool Tracking;
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        this.LoadRig();
+        this.LoadthisNav();
     }
-    protected void LoadRig()
+    protected void LoadthisNav()
     {
-        if(thisBody != null) return;
-        thisBody = GetComponentInParent<Rigidbody>();
+        thisNav = GetComponentInParent<NavMeshAgent>();
+        if(thisNav == null) return;
     }
     protected virtual void Track()
     {
         Vector3 Direction = (PlayerController.Instance.transform.position - this.transform.parent.position).normalized;
         float Distance =  (PlayerController.Instance.transform.position - this.transform.parent.position).magnitude;
-        if(Distance >= stopDis) 
+        if(Distance > stopDis) 
         {
             Tracking = true;
-            thisBody.velocity  = new Vector3(Direction.x * speed,thisBody.velocity.y,Direction.z * speed);
-            this.transform.parent.LookAt(PlayerController.Instance.transform);
+            thisNav.SetDestination(PlayerController.Instance.transform.position);
+            thisNav.speed = speed;
         }
         else 
         {
-            thisBody.velocity = Vector3.zero;
+            thisNav.SetDestination(this.transform.parent.position);
+            this.transform.parent.LookAt(PlayerController.Instance.transform);
             Tracking = false;
         }
     }

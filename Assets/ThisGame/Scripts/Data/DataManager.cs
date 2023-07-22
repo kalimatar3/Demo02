@@ -257,7 +257,8 @@ public class DataManager : MyBehaviour
     {
         foreach(UpgradeableData element in ListUpGradeAbleData)
         {
-            if(name == element.Name)  element.CurrentUpgrade = (element.CurrentUpgrade + 1) % GetmaxUpgradefromUGAD(element.Name); 
+            if(name == element.Name)  element.CurrentUpgrade = (element.CurrentUpgrade + 1); 
+            //if(element.CurrentUpgrade == GetmaxUpgradefromUGAD(element.Name)) 
         }
     }
     public int GetUpgradenumberfromUGAD(string name)
