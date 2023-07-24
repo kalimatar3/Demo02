@@ -32,7 +32,7 @@ public class TrackPlayer : MyBehaviour
         else 
         {
             thisNav.SetDestination(this.transform.parent.position);
-            this.transform.parent.LookAt(PlayerController.Instance.transform);
+           // this.transform.parent.LookAt(PlayerController.Instance.transform);
             Tracking = false;
         }
     }

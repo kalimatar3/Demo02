@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class CameraFollow : followObj
 {
-    [SerializeField] protected Vector3 DefaultCamPOS,FireCamPOS,BossCamPOS;
+    [SerializeField] protected Vector3 DefaultCamPOS,FireCamPOS;
     [SerializeField] protected Quaternion DefaultCamROS;
-    protected float timer;
-    protected Transform CacheObj;
     protected override void Start()
     {
         base.Start();
@@ -18,7 +16,6 @@ public class CameraFollow : followObj
         if(Obj == null) return;
         if(Obj == PlayerController.Instance.transform)
         {
-            timer = 0;
             Vector3 newPos = Vector3.Lerp(this.transform.parent.position, Obj.transform.position + DefaultCamPOS , this.smooth * Time.deltaTime);
             this.transform.parent.position = newPos;
             if(InputManager.Instance.Shootingstick.Horizontal !=0 ||InputManager.Instance.Shootingstick.Vertical != 0)
@@ -29,15 +26,14 @@ public class CameraFollow : followObj
         }
         else
         {
-            StartCoroutine(ForcustoBoss());
+            this.ForcustoBoss();
         }
     }
-    protected IEnumerator ForcustoBoss()
+    protected void ForcustoBoss()
     {
-        yield return new WaitForSeconds(1f);
-        Vector3 Direction = (Obj.transform.position - this.transform.parent.position).normalized;
-        this.transform.parent.forward = Direction;
-        Vector3 newPos = Vector3.Lerp(this.transform.parent.position, Obj.transform.position + Vector3.forward * 20, this.smooth * Time.deltaTime);
+        Vector3 Direction = (Obj.transform.position - PlayerController.Instance.transform.position).normalized;
+        if(Direction.magnitude != 0) this.transform.parent.forward = Direction;
+        Vector3 newPos = Vector3.Lerp(this.transform.parent.position, Obj.transform.position - Direction * 10 + Vector3.up * 5, this.smooth * Time.deltaTime);
         this.transform.parent.position = newPos;
     }
     public virtual void Forcus(Transform obj,float time)

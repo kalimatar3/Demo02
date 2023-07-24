@@ -6,6 +6,7 @@ public class MapManager : MyBehaviour
 {
     protected static MapManager instance;
     public static MapManager Instance { get => instance ;}
+    public List<Vector3> ListBossSapwnPos;
     protected override void Awake()
     {
         base.Awake();
@@ -20,7 +21,12 @@ public class MapManager : MyBehaviour
     {
         string path = "Maps/" + Mapname;
         if(Resources.Load<Transform>(path) == null) Debug.LogWarning(this.transform + "Can load Resources " + Mapname);
-        Instantiate(Resources.Load<Transform>(path));
+        Transform thisMap = Instantiate(Resources.Load<Transform>(path));
+        Transform bossspawnPos = thisMap.transform.Find("BossSpawnPos");
+        foreach(Transform element in bossspawnPos)
+        {
+            ListBossSapwnPos.Add(element.position);
+        }
     }
     protected override void Start()
     {

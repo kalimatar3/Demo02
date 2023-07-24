@@ -12,6 +12,7 @@ public class SpawnEnemies : MyBehaviour
     protected int thisEnemie,thistime;
     public int AllEnemieinlevel;
     public int MaxNumberofEnemies;
+    protected Vector3 ThisPos;
     protected override void Start()
     {
         base.Start();
@@ -40,11 +41,17 @@ public class SpawnEnemies : MyBehaviour
         thistime  = Random.Range((int)TimeToSpawn[thisEnemie].x,(int)TimeToSpawn[thisEnemie].y);
         thisEnemie = Random.Range(0,NumberOfEachEnemie.Count);
         timer += Time.deltaTime *1f;
-        if(timer >= thistime && NumberOfEachEnemie[thisEnemie] != 0 )
+        if(timer >= thistime && NumberOfEachEnemie[thisEnemie] != 0)
         {
             timer = 0 ;
-            Vector3 thisPos = RandomPosAroundPLayer(DisAroundPlayer[thisEnemie]);
-            ListEnemies.Add(EnemiesSpawner.Instance.Spawn(EnemiesSpawner.Instance.EnemiesName[thisEnemie],thisPos,Quaternion.identity));
+            if(thisEnemie > 1) 
+            {
+                int rdPos = Random.Range(0,MapManager.Instance.ListBossSapwnPos.Count);
+                ThisPos = MapManager.Instance.ListBossSapwnPos[rdPos];
+            }
+             
+             else ThisPos = RandomPosAroundPLayer(DisAroundPlayer[thisEnemie]);
+            ListEnemies.Add(EnemiesSpawner.Instance.Spawn(EnemiesSpawner.Instance.EnemiesName[thisEnemie],ThisPos,Quaternion.identity));
             NumberOfEachEnemie[thisEnemie]--;
         }
         if(EnemiesSpawner.Instance.ListEnemiesDefectSpawn.Count > 0 )
@@ -61,6 +68,15 @@ public class SpawnEnemies : MyBehaviour
         }
         for(int i = 0 ; i < NumberOfEachEnemie.Count;i++) cache += NumberOfEachEnemie[i]; 
          AllEnemieinlevel = cache;
+    }
+    protected IEnumerator DelaySpawnEnemy()
+    {
+        yield return new WaitUntil(predicate: () =>
+        {
+            if(CameraCtrl.Instance.CameraFollow.Obj != PlayerController.Instance.transform) return false;
+            else return true;
+        });
+        timer += Time.deltaTime *1f;
     }
     protected void FixedUpdate()
     {

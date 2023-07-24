@@ -6,7 +6,7 @@ public class BossLaserAnimation : MyBehaviour
 {
     public EnemieCtrl enemieCtrl;
     [SerializeField] protected Animator Animator;
-    protected int State;
+    [SerializeField] protected int State;
     protected int INDLE = 0 
     ,RUN = 1,
     ATTACK = 2,
@@ -26,6 +26,6 @@ public class BossLaserAnimation : MyBehaviour
         if(enemieCtrl.TrackPlayer.Tracking) State = RUN;
         else State = ATTACK;
         if(enemieCtrl.EnemiesReciver.CurrentHp <= 0) State = DIE;
-        Animator.SetInteger(StringConts.BossLazerAnim,State);
+       // Animator.SetInteger(StringConts.BossLazerAnim,State);
     }
 }

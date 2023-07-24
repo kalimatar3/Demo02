@@ -10,6 +10,7 @@ public class DataManager : MyBehaviour
         public int Gold;
         public string CurrentMap;
         public string CurrentModelName;
+        public int CurrentLevel;
         public List<ShopData> ListShopData;
         public List<UpgradeableData> ListUpGradeAbleData;
         public List<DropItemData> ListDropItemData;
@@ -46,6 +47,7 @@ public class DataManager : MyBehaviour
     public int Gold;
     public string CurrentMap;
     public string CurrentModelName;
+    public int CurrentLevel;
     public List<UpgradeableData> ListUpGradeAbleData;
     public List<DropItemData> ListDropItemData;
     public List<ShopData> ListShopData; 
@@ -321,6 +323,7 @@ public class DataManager : MyBehaviour
         this.ListUpGradeAbleData = obj.ListUpGradeAbleData;
         this.ListDropItemData = obj.ListDropItemData;
         this.ListShopData = obj.ListShopData;
+        this.CurrentLevel = obj.CurrentLevel;
     }
     public virtual void ClearJson()
     {
@@ -328,6 +331,7 @@ public class DataManager : MyBehaviour
         this.ListUpGradeAbleData = null;
         this.ListDropItemData = null;
         this.ListShopData = null;
+        this.CurrentLevel = 0;
    }
    protected IEnumerator UnlockDelay()
    {

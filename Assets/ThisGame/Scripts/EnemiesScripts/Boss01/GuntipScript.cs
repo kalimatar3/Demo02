@@ -5,18 +5,10 @@ using UnityEngine;
 public class GuntipScript : MyBehaviour
 {
     [SerializeField] protected Transform Target;
-    protected override void Start()
+    protected void FixedUpdate()
     {
-        base.Start();
-        StartCoroutine(this.FakeUpdate());
-    }
-    protected IEnumerator FakeUpdate()
-    {
-        while(true)
-        {
-            Vector3 huongsung  = Target.position - this.transform.position;
-            yield return this.transform.forward = huongsung;
-            yield return Target.transform.forward = huongsung;
-        }
+        Vector3 huongsung = Target.transform.position - transform.position;
+        this.transform.forward = huongsung.normalized;
+        this.Target.forward = -huongsung.normalized;
     }
 }

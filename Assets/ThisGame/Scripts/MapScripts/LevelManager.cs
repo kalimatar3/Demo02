@@ -4,15 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class LevelManager : MyBehaviour
 {
+    [SerializeField] protected List<Transform> ListLevels;
+    public int NEinCrlevel,CEinCrlevel;
+    public string CrLevelname;
     protected static LevelManager instance;
     public static LevelManager Instance { get => instance;}
 
-    [SerializeField] protected List<Transform> Listlevels;
-    protected float timer;
-    [SerializeField] protected int CurrentLevel;
-    [SerializeField] protected float preparetime;
-    public int CEinCrlevel,NEinCrlevel;
-    public string CrLevelname;
     protected override void Awake()
     {
         base.Awake();
@@ -23,49 +20,31 @@ public class LevelManager : MyBehaviour
         }
         else instance = this;
     }
-
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        this.Loadlevels();
+        this.LoadListLevels();
     }
-    protected void Loadlevels()
+    protected void LoadListLevels()
     {
-        if(Listlevels.Count != 0 ) return;
-        foreach(Transform level in this.transform)
+        if(ListLevels.Count > 0 ) return;
+        foreach(Transform element in this.transform)
         {
-            Listlevels.Add(level);
+            ListLevels.Add(element);
         }
     }
-    protected virtual void ChangeLvInEmty()
+    protected override void Start()
     {
-        foreach(Transform level in Listlevels)
+        base.Start();
+        for(int i = 0 ; i < ListLevels.Count; i ++)
         {
-            if(level.gameObject.activeInHierarchy)
-            {
-                this.CrLevelname = level.name;
-                SpawnEnemies spawnEnemies = level.GetComponent<SpawnEnemies>();
-                if(spawnEnemies == null) return;
-                CEinCrlevel = spawnEnemies.AllEnemieinlevel;
-                NEinCrlevel = spawnEnemies.MaxNumberofEnemies;
-                if(CEinCrlevel > 0) return;
-                if(level.GetComponent<SpawnEnemies>() == null) return;
-               foreach(Transform enemie in level.GetComponent<SpawnEnemies>().ListEnemies)
-                if(enemie.gameObject.activeInHierarchy == true)  return;
-            }
+            ListLevels[i].gameObject.SetActive(false);
         }
-        timer += Time.deltaTime * 1f;
-        if(timer > preparetime)
-        {
-            timer = 0;
-            foreach(Transform element in Listlevels)  element.gameObject.SetActive(false);
-            Listlevels[CurrentLevel].gameObject.SetActive(true);
-            CurrentLevel ++;
-            if(CurrentLevel >= Listlevels.Count)PanelCtrl.Instance.ShowPanel("Winpannel");
-        }
+        ListLevels[DataManager.Instance.CurrentLevel].gameObject.SetActive(true);
     }
-    protected void FixedUpdate()
+    public void NextLevel()
     {
-        this.ChangeLvInEmty();
+        DataManager.Instance.CurrentLevel = ( DataManager.Instance.CurrentLevel + 1) % ListLevels.Count;
+        Lsmanager.Instance.SaveGame();
     }
 }

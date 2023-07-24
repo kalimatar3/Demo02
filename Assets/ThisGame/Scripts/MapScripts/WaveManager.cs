@@ -8,8 +8,6 @@ public class WaveManager : MyBehaviour
     [SerializeField] protected int CurrentWave;
     [SerializeField] protected float preparetime;
     protected float timer;
-    public int CEinCrWave,NEinCrWave;
-    public string CrWavename;
     protected override void LoadComponents()
     {
         base.LoadComponents();
@@ -29,12 +27,12 @@ public class WaveManager : MyBehaviour
         {
             if(level.gameObject.activeInHierarchy)
             {
-                this.CrWavename = level.name;
+                LevelManager.Instance.CrLevelname = level.name;
                 SpawnEnemies spawnEnemies = level.GetComponent<SpawnEnemies>();
                 if(spawnEnemies == null) return;
-                CEinCrWave = spawnEnemies.AllEnemieinlevel;
-                NEinCrWave = spawnEnemies.MaxNumberofEnemies;
-                if(CEinCrWave > 0) return;
+                LevelManager.Instance.CEinCrlevel = spawnEnemies.AllEnemieinlevel;
+                LevelManager.Instance.NEinCrlevel = spawnEnemies.MaxNumberofEnemies;
+                if(LevelManager.Instance.CEinCrlevel > 0) return;
                 if(level.GetComponent<SpawnEnemies>() == null) return;
                foreach(Transform enemie in level.GetComponent<SpawnEnemies>().ListEnemies)
                 if(enemie.gameObject.activeInHierarchy == true)  return;
@@ -47,7 +45,11 @@ public class WaveManager : MyBehaviour
             foreach(Transform element in ListWave)  element.gameObject.SetActive(false);
             ListWave[CurrentWave].gameObject.SetActive(true);
             CurrentWave ++;
-            if(CurrentWave >= ListWave.Count)PanelCtrl.Instance.ShowPanel("Winpannel");
+            if(CurrentWave >= ListWave.Count)
+            {
+                LevelManager.Instance.NextLevel();
+                PanelCtrl.Instance.ShowPanel("Winpannel");
+            }
         }
     }
     protected void FixedUpdate()
