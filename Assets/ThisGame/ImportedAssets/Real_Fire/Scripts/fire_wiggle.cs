@@ -11,11 +11,9 @@ public class fire_wiggle : MonoBehaviour {
 	private float initial_size;
 	private Vector3 initial_position;
 	private float randomizer=0f;
-
-    // Use this for initialization
-
-    [System.Obsolete]
-    void Start () {
+	// Use this for initialization
+	
+	void Start () {
 		randomizer = Random.Range(.75f,1.25f);//making each flame have burst randomly
 	initial_start_speed=this.GetComponent<ParticleSystem>().startSpeed;//saving initial flame properties
     initial_emission_rate=this.GetComponent<ParticleSystem>().emissionRate;
@@ -23,10 +21,9 @@ public class fire_wiggle : MonoBehaviour {
 	initial_size = this.GetComponent<ParticleSystem>().startSize;
 	initial_position = this.transform.position;
 	}
-
-    // Update is called once per frame
-    [System.Obsolete]
-    void Update () {
+	
+	// Update is called once per frame
+	void Update () {
 		t+=Time.deltaTime*randomizer;
 		wiggle_t+=Time.deltaTime*randomizer;
 		

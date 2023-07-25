@@ -26,6 +26,6 @@ public class BossLaserAnimation : MyBehaviour
         if(enemieCtrl.TrackPlayer.Tracking) State = RUN;
         else State = ATTACK;
         if(enemieCtrl.EnemiesReciver.CurrentHp <= 0) State = DIE;
-       // Animator.SetInteger(StringConts.BossLazerAnim,State);
+        Animator.SetInteger(StringConts.BossLazerAnim,State);
     }
 }

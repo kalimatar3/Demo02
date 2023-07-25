@@ -4,21 +4,26 @@ using UnityEngine;
 
 public class SpawnEnemies : MyBehaviour
 {
-    [SerializeField] protected List<int> NumberOfEachEnemie;
+    [SerializeField] protected List<int> NumberOfEachEnemy;
+    [SerializeField] protected List<int> NUmberOfEachBoss;
     [SerializeField] protected List<Vector2> DisAroundPlayer;
     [SerializeField] protected List<Vector2> TimeToSpawn;
     public List<Transform> ListEnemies;
     protected float timer;
-    protected int thisEnemie,thistime;
-    public int AllEnemieinlevel;
+    protected int thisEnemie,thistime,EnemyInWave,BossinWave;
+    public int AllEnemiesinWave;
     public int MaxNumberofEnemies;
     protected Vector3 ThisPos;
     protected override void Start()
     {
         base.Start();
-        for(int i = 0 ; i <NumberOfEachEnemie.Count ; i++ )
+        for(int i = 0 ; i <NumberOfEachEnemy.Count ; i++ )
         {
-            MaxNumberofEnemies += NumberOfEachEnemie[i];
+            MaxNumberofEnemies += NumberOfEachEnemy[i];
+        }
+        for(int i = 0 ; i < NUmberOfEachBoss.Count ;i++)
+        {
+            MaxNumberofEnemies += NUmberOfEachBoss[i];
         }
     }
     protected override void LoadComponents()
@@ -37,22 +42,20 @@ public class SpawnEnemies : MyBehaviour
     }
     protected void spawnenemie()
     {
-        int cache = 0;
-        thistime  = Random.Range((int)TimeToSpawn[thisEnemie].x,(int)TimeToSpawn[thisEnemie].y);
-        thisEnemie = Random.Range(0,NumberOfEachEnemie.Count);
+        thistime  = Random.Range((int)TimeToSpawn[thisEnemie].x,(int)TimeToSpawn[thisEnemie].y); 
+        thisEnemie = Random.Range(0,NumberOfEachEnemy.Count);
         timer += Time.deltaTime *1f;
-        if(timer >= thistime && NumberOfEachEnemie[thisEnemie] != 0)
+        if(timer >= thistime && NumberOfEachEnemy[thisEnemie] != 0)
         {
             timer = 0 ;
             if(thisEnemie > 1) 
             {
                 int rdPos = Random.Range(0,MapManager.Instance.ListBossSapwnPos.Count);
-                ThisPos = MapManager.Instance.ListBossSapwnPos[rdPos];
+                ThisPos = MapManager.Instance.ListBossSapwnPos[rdPos]; 
             }
-             
-             else ThisPos = RandomPosAroundPLayer(DisAroundPlayer[thisEnemie]);
+            else ThisPos = RandomPosAroundPLayer(DisAroundPlayer[thisEnemie]);
             ListEnemies.Add(EnemiesSpawner.Instance.Spawn(EnemiesSpawner.Instance.EnemiesName[thisEnemie],ThisPos,Quaternion.identity));
-            NumberOfEachEnemie[thisEnemie]--;
+            NumberOfEachEnemy[thisEnemie]--;
         }
         if(EnemiesSpawner.Instance.ListEnemiesDefectSpawn.Count > 0 )
         {
@@ -60,26 +63,55 @@ public class SpawnEnemies : MyBehaviour
             {
                 if(EnemiesSpawner.Instance.ListEnemiesDefectSpawn[i].name == EnemiesSpawner.Instance.EnemiesName[thisEnemie])
                 {
-                    NumberOfEachEnemie[thisEnemie]++;
+                    NumberOfEachEnemy[thisEnemie]++;
                     MaxNumberofEnemies ++;
                     EnemiesSpawner.Instance.ListEnemiesDefectSpawn.Remove(EnemiesSpawner.Instance.ListEnemiesDefectSpawn[i]);
                 }
             }
         }
-        for(int i = 0 ; i < NumberOfEachEnemie.Count;i++) cache += NumberOfEachEnemie[i]; 
-         AllEnemieinlevel = cache;
     }
-    protected IEnumerator DelaySpawnEnemy()
+    protected void spawnboss()
     {
-        yield return new WaitUntil(predicate: () =>
-        {
-            if(CameraCtrl.Instance.CameraFollow.Obj != PlayerController.Instance.transform) return false;
-            else return true;
-        });
+        thistime  = 3; 
+        thisEnemie = Random.Range(0,NUmberOfEachBoss.Count);
         timer += Time.deltaTime *1f;
+        if(timer >= thistime && NUmberOfEachBoss[thisEnemie] != 0)
+        {
+            timer = 0 ;
+            int rdPos = Random.Range(0,MapManager.Instance.ListBossSapwnPos.Count);
+            ThisPos = MapManager.Instance.ListBossSapwnPos[rdPos]; 
+            ListEnemies.Add(BossSpawner.Instance.Spawn(BossSpawner.Instance.ListBossesname[thisEnemie],ThisPos,Quaternion.identity));
+            NUmberOfEachBoss[thisEnemie]--;
+        }
+        if(BossSpawner.Instance.ListEnemiesDefectSpawn.Count > 0 )
+        {
+            for(int i = 0 ; i < BossSpawner.Instance.ListEnemiesDefectSpawn.Count ;i ++)
+            {
+                if(BossSpawner.Instance.ListEnemiesDefectSpawn[i].name == BossSpawner.Instance.ListBossesname[thisEnemie])
+                {
+                    NUmberOfEachBoss[thisEnemie]++;
+                    MaxNumberofEnemies ++;
+                    BossSpawner.Instance.ListEnemiesDefectSpawn.Remove(BossSpawner.Instance.ListEnemiesDefectSpawn[i]);
+                }
+            }
+        }
     }
     protected void FixedUpdate()
     {
-        this.spawnenemie();
+        this.CountEnemy();
+        this.WaveSpawn();
+    }
+    protected void WaveSpawn()
+    {
+        this.spawnboss();
+        if(BossinWave > 0) return;
+        spawnenemie();
+    }
+    protected void CountEnemy()
+    {
+        int cache = 0;
+        for(int i = 0 ; i < NUmberOfEachBoss.Count;i++) cache += NUmberOfEachBoss[i]; 
+        for(int i = 0 ; i < NumberOfEachEnemy.Count;i++) cache += NumberOfEachEnemy[i]; 
+        this.AllEnemiesinWave = cache;
     }
 }

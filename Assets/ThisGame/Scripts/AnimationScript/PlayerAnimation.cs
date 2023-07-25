@@ -6,8 +6,8 @@ public class PlayerAnimation : MyBehaviour
 {
     [SerializeField] protected PlayerController playerController;
     [SerializeField] protected Animator PlayerAnimator;
+    [SerializeField] protected bool IsDeadAnim,facing;
     protected float MoveAnim;
-    protected bool IsDeadAnim;
     protected override void LoadComponents()
     {
         base.LoadComponents();
@@ -38,8 +38,14 @@ public class PlayerAnimation : MyBehaviour
     }
     protected void Moving()
     {
+        if(InputManager.Instance.MovingJoystick.Horizontal * InputManager.Instance.Shootingstick.Horizontal < 0 || InputManager.Instance.MovingJoystick.Vertical * InputManager.Instance.Shootingstick.Vertical < 0 )
+        {
+            facing = false;
+        }
+        else facing = true;
         this.MoveAnim = playerController.PlayerMoving.Move.magnitude;
-        PlayerAnimator.SetFloat(StringConts.PlayerMoveAnim,MoveAnim);       
+        PlayerAnimator.SetFloat(StringConts.PlayerMoveAnim,MoveAnim);
+        PlayerAnimator.SetBool(StringConts.PlayerFacingAnim,facing);       
     }
     protected void Attack()
     {

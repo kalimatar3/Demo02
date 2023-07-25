@@ -30,7 +30,7 @@ public class WaveManager : MyBehaviour
                 LevelManager.Instance.CrLevelname = level.name;
                 SpawnEnemies spawnEnemies = level.GetComponent<SpawnEnemies>();
                 if(spawnEnemies == null) return;
-                LevelManager.Instance.CEinCrlevel = spawnEnemies.AllEnemieinlevel;
+                LevelManager.Instance.CEinCrlevel = spawnEnemies.AllEnemiesinWave;
                 LevelManager.Instance.NEinCrlevel = spawnEnemies.MaxNumberofEnemies;
                 if(LevelManager.Instance.CEinCrlevel > 0) return;
                 if(level.GetComponent<SpawnEnemies>() == null) return;

@@ -4,7 +4,7 @@ using System.Collections;
 public class gui : MonoBehaviour {
 	public Material mat;
 	public Material mat1;
-    new string name="DAY";
+	string name="DAY";
 	// Use this for initialization
 	void Start () {
 	}

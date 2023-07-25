@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ActbyDis : Act
 {
-    [SerializeField] protected float DisToAct;
+    public float DisToAct;
     protected Transform Oritrans;
     [SerializeField]protected float Dis;
     protected override bool CanDo()
