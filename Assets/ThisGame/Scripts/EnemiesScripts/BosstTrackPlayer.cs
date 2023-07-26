@@ -10,13 +10,13 @@ public class BosstTrackPlayer : TrackPlayer
         Vector3 Direction = (PlayerController.Instance.transform.position - this.transform.parent.position).normalized;
         float Distance =  (PlayerController.Instance.transform.position - this.transform.parent.position).magnitude;
             test = Vector3.Angle(Direction,this.transform.parent.forward);
-        if(Distance > stopDis)
+        if(Distance > stopDis && !EnemieCtrl.EnemieAct.gate)
         {
             Tracking = true;
             thisNav.SetDestination(PlayerController.Instance.transform.position);
             thisNav.speed = speed;
         }
-        else
+        if(Distance <= stopDis && EnemieCtrl.EnemieAct.gate)
         {
             thisNav.SetDestination(this.transform.parent.position);
             if(Vector3.Angle(Direction,this.transform.parent.forward) >= 90)

@@ -16,7 +16,7 @@ public class PlayerHpbar : Hpbar
     }
     protected virtual void LoadHp()
     {
-        PlayerCurrentHP =CurrentHp;
+        PlayerCurrentHP = CurrentHp;
         this.CurrentHp = this.DameReciver.GetComponent<PlayerReciver>().CurrentHp;
         this.MaxHp = this.DameReciver.GetComponent<PlayerReciver>().MaxHp;
     }

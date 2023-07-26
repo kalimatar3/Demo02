@@ -80,6 +80,7 @@ public class PlayerReciver : DameReciver
     }
     public override void DeductHp(float dame)
     {
+        SoundSpawner.Instance.Spawn(CONSTSoundsName.Attacked,Vector3.zero,Quaternion.identity);
         if(CanTakeDame)
         {
             CanTakeDame = false;
@@ -91,7 +92,6 @@ public class PlayerReciver : DameReciver
             else
             {
                 PanelCtrl.Instance.ShowPanel("TakeDamePanel");
-                SoundSpawner.Instance.Spawn(CONSTSoundsName.Attacked,Vector3.zero,Quaternion.identity);
                 base.DeductHp(dame);
             }
             StartCoroutine(TakeDameDelay());

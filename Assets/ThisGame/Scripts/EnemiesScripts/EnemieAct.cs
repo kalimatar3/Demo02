@@ -5,10 +5,10 @@ using UnityEngine;
 public class EnemieAct : ActbyDis
 {
     [SerializeField]  protected float timerate;
-    protected float timer;
+    [SerializeField] protected float timer;
     protected EnemieCtrl EnemieCtrl;
     protected EnemiesSO enemiesSO;
-    protected bool gate;
+    public bool gate;
     protected void LoadEnemieSO()
     {
         if(enemiesSO != null) return;
@@ -22,7 +22,7 @@ public class EnemieAct : ActbyDis
     protected override void Action()
     {
         if(this.CanDo() && !this.gate)   this.gate = true;
-        if(!this.gate) return;
+        if(!this.gate)   return;
         this.Doing();
     }
     protected void LoadEnemieCtrl()

@@ -31,7 +31,7 @@ public class EnemieActSpawner : Spawner
     public override Transform Spawn(string PrefabName, Vector3 position, Quaternion rotation)
     {
         Transform newPre = base.Spawn(PrefabName,position,rotation);
-        DealToPlayer dealToPlayer = newPre.GetComponentInChildren<DealToPlayer>();
+        EnemyDealToPlayer dealToPlayer = newPre.GetComponentInChildren<EnemyDealToPlayer>();
         foreach(EnemiesSO ThisSO in DataManager.Instance.ListEnemieSO)
         {
             if(ThisSO.SkillName == PrefabName)

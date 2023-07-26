@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class UIHeathCost : UIperform
 {
-    protected override void PreformText()
+    protected string mes;
+   protected override void PreformText()
     {
         base.PreformText();
-        string Mes = DataManager.Instance.GetCost(DataManager.UpgradeabledataName.IcreMaxHPCost.ToString()).ToString();
-        Text.text = Mes;
+        if(DataManager.Instance.GetCost(DataManager.UpgradeabledataName.IcreMaxHPCost.ToString()) <= 0)  mes = "MAX";
+        else mes = DataManager.Instance.GetCost(DataManager.UpgradeabledataName.IcreMaxHPCost.ToString()).ToString();
+        Text.text = mes;
     }
 }

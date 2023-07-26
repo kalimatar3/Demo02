@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class LevelManager : MyBehaviour
 {
-    [SerializeField] protected List<Transform> ListLevels;
+    public List<Transform> ListLevels;
     public int NEinCrlevel,CEinCrlevel;
     public string CrLevelname;
     protected static LevelManager instance;

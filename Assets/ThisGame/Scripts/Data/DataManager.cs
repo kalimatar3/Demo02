@@ -250,6 +250,7 @@ public class DataManager : MyBehaviour
         {
             if(Name == element.Name)
             {
+                if(GetUpgradenumberfromUGAD(Name) >= GetmaxUpgradefromUGAD(Name) -1) return 0;
                 return element.Cost[GetUpgradenumberfromUGAD(Name)];
             }
         }
@@ -259,8 +260,11 @@ public class DataManager : MyBehaviour
     {
         foreach(UpgradeableData element in ListUpGradeAbleData)
         {
-            if(name == element.Name)  element.CurrentUpgrade = (element.CurrentUpgrade + 1); 
-            //if(element.CurrentUpgrade == GetmaxUpgradefromUGAD(element.Name)) 
+            if(name == element.Name)  
+            {
+                if(element.CurrentUpgrade >= GetmaxUpgradefromUGAD(element.Name) - 1) return;
+                element.CurrentUpgrade = (element.CurrentUpgrade + 1);
+            }
         }
     }
     public int GetUpgradenumberfromUGAD(string name)
@@ -275,7 +279,8 @@ public class DataManager : MyBehaviour
     {
         foreach(DropItemData element in ListDropItemData)
         {
-            if(name == element.Name)  element.CurrentUpgrade = (element.CurrentUpgrade + 1) % GetmaxUpgradefromDID(element.Name); 
+            if(element.CurrentUpgrade >= GetmaxUpgradefromDID(element.Name) -1) return;
+            if(name == element.Name)  element.CurrentUpgrade = (element.CurrentUpgrade + 1); 
         }
     }
     public int GetUpgradenumberfromDID(string name)

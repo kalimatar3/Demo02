@@ -19,5 +19,7 @@ public static class CONSTSoundsName
     SpeedUp ="speedUp",
     ButtonTap = "ButtonTap",
     PickCoin = "Coin",
-    Revive = "Revive";
+    Revive = "Revive",
+    AttackMiss = "Attack_Missed",
+    SpiderAttack = "Spider_Attack";
 }

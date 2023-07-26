@@ -12,12 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b3a6c970acb5244a48f4beb965807e, type: 3}
   m_Name: Coin
   m_EditorClassIdentifier: 
-  ListCoinData:
+  ListCoinValue:
   - number: 1
-    Cost: 1
   - number: 2
-    Cost: 2
+  - number: 3
   - number: 4
-    Cost: 3
   - number: 5
-    Cost: 4
+  - number: 6

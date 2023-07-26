@@ -40,12 +40,12 @@ protected bool LR;
     protected void StepSound()
     {
         soundtimer += Time.deltaTime * 1f;
-        if(Move.magnitude >=1 && soundtimer > 4*1/CurrentSpeed)
+        if(Move.magnitude >=1 && soundtimer > 4 *1 /CurrentSpeed)
         {
             soundtimer =0;
             if(!LR) 
             {
-                LR= true;
+                LR = true;
                 SoundSpawner.Instance.Spawn(CONSTSoundsName.PlayerMoving1,Vector3.zero,Quaternion.identity);
             }
             else

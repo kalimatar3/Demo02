@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class UICoinCost : UIperform
 {
+    protected string mes;
    protected override void PreformText()
     {
         base.PreformText();
-        string Mes = DataManager.Instance.GetCost(DataManager.UpgradeabledataName.IcreCoinCost.ToString()).ToString();
-        Text.text = Mes;
+        if(DataManager.Instance.GetCost(DataManager.UpgradeabledataName.IcreCoinCost.ToString()) <= 0)  mes = "MAX";
+        else mes = DataManager.Instance.GetCost(DataManager.UpgradeabledataName.IcreCoinCost.ToString()).ToString();
+        Text.text = mes;
     }
 }

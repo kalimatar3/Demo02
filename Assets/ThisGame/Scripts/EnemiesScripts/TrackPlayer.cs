@@ -9,10 +9,16 @@ public class TrackPlayer : MyBehaviour
     [SerializeField] protected float stopDis;
     [SerializeField] protected NavMeshAgent thisNav; 
     public bool Tracking;
+    [SerializeField] protected EnemieCtrl EnemieCtrl;
     protected override void LoadComponents()
     {
         base.LoadComponents();
         this.LoadthisNav();
+        this.LoadEnemyCTrl();
+    }
+    protected void LoadEnemyCTrl()
+    {
+        EnemieCtrl = GetComponentInParent<EnemieCtrl>();
     }
     protected void LoadthisNav()
     {
@@ -23,16 +29,17 @@ public class TrackPlayer : MyBehaviour
     {
         Vector3 Direction = (PlayerController.Instance.transform.position - this.transform.parent.position).normalized;
         float Distance =  (PlayerController.Instance.transform.position - this.transform.parent.position).magnitude;
-        if(Distance > stopDis) 
+        if(Distance > stopDis && !EnemieCtrl.EnemieAct.gate) 
         {
             Tracking = true;
             thisNav.SetDestination(PlayerController.Instance.transform.position);
             thisNav.speed = speed;
         }
-        else 
+        if(Distance <= stopDis && EnemieCtrl.EnemieAct.gate)
         {
             thisNav.SetDestination(this.transform.parent.position);
-            this.transform.parent.LookAt(PlayerController.Instance.transform);
+            if(Vector3.Angle(Direction,this.transform.parent.forward) >= 90)
+            this.transform.parent.forward = Vector3.Lerp(this.transform.parent.forward,Direction,Time.deltaTime * 1f * 4);
             Tracking = false;
         }
     }

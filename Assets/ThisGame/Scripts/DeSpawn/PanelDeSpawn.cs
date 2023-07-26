@@ -25,8 +25,8 @@ public class PanelDeSpawn : Despawnbytime
         {
             Color color = new Color();
             color = Color.red;
-            color.a = 0.7f;
-            image.color = Color.Lerp(image.color,color,Time.deltaTime * 1f * 5f/1.5f);
+            color.a = 0.5f;
+            image.color = Color.Lerp(image.color,color,Time.deltaTime * 1f * 30f/1.5f);
             if(image.color == color) return true;
             return false;
         });

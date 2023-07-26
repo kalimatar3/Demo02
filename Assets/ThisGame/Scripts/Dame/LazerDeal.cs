@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LazerDeal : DealToPlayer
+public class LazerDeal : BossDealtoPlayer
 {
     [SerializeField] protected float timerate;
     protected float timer;

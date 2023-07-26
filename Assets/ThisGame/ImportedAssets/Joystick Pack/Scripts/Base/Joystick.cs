@@ -5,8 +5,8 @@ using UnityEngine.EventSystems;
 
 public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
-    public float Horizontal { get { return (snapX) ? SnapFloat(input.x, AxisOptions.Horizontal) : input.x; } }
-    public float Vertical { get { return (snapY) ? SnapFloat(input.y, AxisOptions.Vertical) : input.y; } }
+    public float Horizontal { get { return (snapX) ? SnapFloat(input.x, AxisOptions.Horizontal) : input.x; } set{} }
+    public float Vertical { get { return (snapY) ? SnapFloat(input.y, AxisOptions.Vertical) : input.y; } set{} }
     public Vector2 Direction { get { return new Vector2(Horizontal, Vertical); } }
 
     public float HandleRange
@@ -25,20 +25,20 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     public bool SnapX { get { return snapX; } set { snapX = value; } }
     public bool SnapY { get { return snapY; } set { snapY = value; } }
 
-    [SerializeField] private float handleRange = 1;
-    [SerializeField] private float deadZone = 0;
-    [SerializeField] private AxisOptions axisOptions = AxisOptions.Both;
-    [SerializeField] private bool snapX = false;
-    [SerializeField] private bool snapY = false;
+    [SerializeField] protected float handleRange = 1;
+    [SerializeField] protected float deadZone = 0;
+    [SerializeField] protected AxisOptions axisOptions = AxisOptions.Both;
+    [SerializeField] protected bool snapX = false;
+    [SerializeField] protected bool snapY = false;
 
     [SerializeField] protected RectTransform background = null;
-    [SerializeField] private RectTransform handle = null;
-    private RectTransform baseRect = null;
+    [SerializeField] protected RectTransform handle = null;
+    protected RectTransform baseRect = null;
 
-    private Canvas canvas;
-    private Camera cam;
+    protected Canvas canvas;
+    protected Camera cam;
 
-    private Vector2 input = Vector2.zero;
+    protected Vector2 input = Vector2.zero;
 
     protected virtual void Start()
     {
@@ -56,12 +56,30 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         handle.pivot = center;
         handle.anchoredPosition = Vector2.zero;
     }
+        protected virtual void OnEnable()
+    {
+        HandleRange = handleRange;
+        DeadZone = deadZone;
+        baseRect = GetComponent<RectTransform>();
+        canvas = GetComponentInParent<Canvas>();
+        if (canvas == null)
+        Debug.LogError("The Joystick is not placed inside a canvas");
+        Vector2 center = new Vector2(0.5f, 0.5f);
+        background.pivot = center;
+        handle.anchorMin = center;
+        handle.anchorMax = center;
+        handle.pivot = center;
+        handle.anchoredPosition = Vector2.zero;
+        Horizontal = 0f;
+        Vertical = 0f;
+        input = Vector2.zero;
+        handle.anchoredPosition = Vector2.zero;
+    }
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
         OnDrag(eventData);
     }
-
     public void OnDrag(PointerEventData eventData)
     {
         cam = null;
@@ -86,8 +104,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         else
             input = Vector2.zero;
     }
-
-    private void FormatInput()
+    protected void FormatInput()
     {
         if (axisOptions == AxisOptions.Horizontal)
             input = new Vector2(input.x, 0f);
@@ -95,7 +112,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
             input = new Vector2(0f, input.y);
     }
 
-    private float SnapFloat(float value, AxisOptions snapAxis)
+    protected float SnapFloat(float value, AxisOptions snapAxis)
     {
         if (value == 0)
             return value;
@@ -146,5 +163,6 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         return Vector2.zero;
     }
 }
+
 
 public enum AxisOptions { Both, Horizontal, Vertical }

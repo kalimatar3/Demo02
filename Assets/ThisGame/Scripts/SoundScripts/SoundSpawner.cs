@@ -6,11 +6,17 @@ public class SoundSpawner : Spawner
     protected static SoundSpawner instance;
     public static SoundSpawner Instance { get => instance ;}
     public List<AudioClip> ListAudioClips;
+    protected AudioSource AudioSource;
     protected override void LoadComponents()
     {
         base.LoadComponents();
         this.LoadListtAudioClips();
         this.LoadPrefabs();
+        this.Loadaudiosourse();
+    }
+    protected void Loadaudiosourse()
+    {
+        this.AudioSource = GetComponent<AudioSource>();
     }
     protected override void LoadPrefabs()
     {
@@ -62,5 +68,15 @@ public class SoundSpawner : Spawner
         base.Awake();
         if(instance != this && instance != null) Destroy(this);
         else instance = this;
+    }
+    public void Play_audio(string Name)
+    {
+        foreach(AudioClip element in ListAudioClips)
+        {
+            if(element.name == Name)
+            {
+                AudioSource.PlayOneShot(element);
+            }
+        }
     }
 }

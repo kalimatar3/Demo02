@@ -19,6 +19,7 @@ public class Shooting : PlayerAct
     // BUFF
     public float ExtraDame,Timer,BoostTime,BoostValue;
     public bool CanDameUp;
+    public Vector3 shootingVector;
     protected override void LoadComponents()
     {
         base.LoadComponents();
@@ -86,20 +87,28 @@ public class Shooting : PlayerAct
     protected void shotting()
     {
         if(this.Reloadgate) return;
-        if(InputManager.Instance.Shootingstick.Horizontal != 0 || InputManager.Instance.Shootingstick.Vertical != 0 )
+        if(InputManager.Instance.Shootingstick.gameObject.activeInHierarchy)
         {
-        firetimer += Time.deltaTime * 1f;
-            if(firetimer > FireRate)
+            shootingVector = new Vector3(InputManager.Instance.Shootingstick.Horizontal,0,InputManager.Instance.Shootingstick.Vertical);
+            if(shootingVector.magnitude > 0)
             {
-                firetimer = 0;
-                ThisBullet =  BulletSpawner.Instance.Spawn(Bulletname,Guntip.position,Guntip.rotation);
-                EffectSpawner.Instance.Spawn(ThisExplosionFireName,Guntip.position,Guntip.rotation);
-                ThisBullet.GetComponentInChildren<DealToEnemies>().CanThroughObj = this.CanThroughObj;
-                ThisBullet.GetComponentInChildren<DealToEnemies>().dealnumber = ThisBullet.GetComponentInChildren<DealToEnemies>().dealnumber*(1 + ExtraDame);
-                ThisBullet.GetComponentInChildren<DealToEnemies>().ExplosionHitName = ThisExplosionHitName;
-                CurrentAmmo --;
+                firetimer += Time.deltaTime * 1f;
+                if(firetimer > FireRate)
+                {
+                    firetimer = 0;
+                    ThisBullet =  BulletSpawner.Instance.Spawn(Bulletname,Guntip.position,Guntip.rotation);
+                    EffectSpawner.Instance.Spawn(ThisExplosionFireName,Guntip.position,Guntip.rotation);
+                    ThisBullet.GetComponentInChildren<DealToEnemies>().CanThroughObj = this.CanThroughObj;
+                    ThisBullet.GetComponentInChildren<DealToEnemies>().dealnumber = ThisBullet.GetComponentInChildren<DealToEnemies>().dealnumber*(1 + ExtraDame);
+                    ThisBullet.GetComponentInChildren<DealToEnemies>().ExplosionHitName = ThisExplosionHitName;
+                    CurrentAmmo --;
+                }
             }
         }
+    }
+    public void RestoreGun()
+    {
+        shootingVector = Vector3.zero;
     }
     protected void DameUp(float Value,float time)
     {
