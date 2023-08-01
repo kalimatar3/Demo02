@@ -11,6 +11,7 @@ public class DataManager : MyBehaviour
         public string CurrentMap;
         public string CurrentModelName ;
         public int CurrentLevel;
+        public  float MusicVolume,SoundEffectVolume;
         public List<ShopData> ListShopData;
         public List<UpgradeableData> ListUpGradeAbleData;
         public List<DropItemData> ListDropItemData;
@@ -48,6 +49,7 @@ public class DataManager : MyBehaviour
     public string CurrentMap;
     public string CurrentModelName;
     public int CurrentLevel;
+    public  float MusicVolume,SoundEffectVolume;
     public List<UpgradeableData> ListUpGradeAbleData;
     public List<DropItemData> ListDropItemData;
     public List<ShopData> ListShopData; 
@@ -324,6 +326,8 @@ public class DataManager : MyBehaviour
         this.CurrentMap = obj.CurrentMap;
         this.CurrentModelName = obj.CurrentModelName;
         this.ListUpGradeAbleData = obj.ListUpGradeAbleData;
+        this.MusicVolume = obj.MusicVolume;
+        this.SoundEffectVolume = obj.SoundEffectVolume;
         this.ListDropItemData = obj.ListDropItemData;
         this.ListShopData = obj.ListShopData;
         this.CurrentLevel = obj.CurrentLevel;

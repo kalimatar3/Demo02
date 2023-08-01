@@ -22,4 +22,6 @@ public static class CONSTSoundsName
     Revive = "Revive",
     AttackMiss = "Attack_Missed",
     SpiderAttack = "Spider_Attack";
+    public static string MixerMusicVolume = "Music",
+    MixerSoundEffectVolume = "SoundEffect";
 }

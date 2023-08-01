@@ -136,6 +136,16 @@ public class ButtonScript : MyBehaviour
         this.BuyButtonState();
         this.SelectButtonState();
     }
+    public void SettingMusicVolume()
+    {
+        SoundManager.Instance.SettingMusicVolume();
+        Lsmanager.Instance.SaveGame();
+    }
+    public void SettingSoundEffectVolume()
+    {
+        SoundManager.Instance.SettingSoundEffectVolume();
+        Lsmanager.Instance.SaveGame();
+    }
     protected void BuyButtonState()
     {
         foreach(Transform locked in ListUnlockbutton)

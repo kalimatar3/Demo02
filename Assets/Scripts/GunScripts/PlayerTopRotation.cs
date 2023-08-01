@@ -20,7 +20,7 @@ public class PlayerTopRotation : MyBehaviour
         }
         else
         {
-            this.transform.rotation = Quaternion.Lerp(this.transform.rotation,Quaternion.LookRotation(PlayerController.Instance.transform.forward), Time.deltaTime * 1f * 4f);
+            this.transform.rotation = Quaternion.Lerp(this.transform.rotation,Quaternion.LookRotation(PlayerController.Instance.transform.forward), Time.deltaTime * 1f * 10f);
         }
     }
     protected void FixedUpdate()

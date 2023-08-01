@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 public class SoundSpawner : Spawner
 {
     protected static SoundSpawner instance;
     public static SoundSpawner Instance { get => instance ;}
     public List<AudioClip> ListAudioClips;
+    [SerializeField] protected AudioMixerGroup EffectMixer;
     protected AudioSource AudioSource;
     protected override void LoadComponents()
     {
@@ -25,10 +27,12 @@ public class SoundSpawner : Spawner
         {
             GameObject audioObject =  new GameObject(element.name);
             audioObject.transform.SetParent(transform.Find("Prefabs"));
+            AudioSource newaudiosourse = audioObject.AddComponent<AudioSource>();
+            newaudiosourse.outputAudioMixerGroup = this.EffectMixer;
+            newaudiosourse.clip  = GetAudioClipbyName(element.name);
             audioObject.SetActive(false);
             GameObject despawn = new GameObject("Despawn");
             despawn.transform.SetParent(audioObject.transform);
-            audioObject.AddComponent<AudioSource>();
             despawn.AddComponent<SoundDeSpawn>();
             despawn.GetComponent<SoundDeSpawn>().DespawnTime = element.length;
             prefabs.Add(audioObject.transform);
@@ -49,8 +53,9 @@ public class SoundSpawner : Spawner
     {
         Transform Newpre =   base.Spawn(PrefabName, position, rotation);
         AudioSource audioSource = Newpre.GetComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = this.EffectMixer;
         if(audioSource == null) Debug.LogWarning("Can founnd audiosourse" + PrefabName);
-        if(Newpre.transform.gameObject.activeInHierarchy) audioSource.PlayOneShot(GetAudioClipbyName(PrefabName));
+        //if(Newpre.transform.gameObject.activeInHierarchy) audioSource.PlayOneShot(GetAudioClipbyName(PrefabName));
         return Newpre;
     }
     protected void LoadListtAudioClips()
