@@ -29,7 +29,7 @@ public class Lazer : EnemieAct
     }
     protected void LockTarget()
     {
-        this.TarGet.parent.position = PlayerController.Instance.transform.position;
+        this.TarGet.parent.position = Vector3.Lerp(this.TarGet.position,PlayerController.Instance.transform.position,Time.deltaTime * 1f * 1f) ;
     }
     protected void lazering()
     { 

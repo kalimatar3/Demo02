@@ -17,7 +17,7 @@ MonoBehaviour:
   maxhp: 50
   Dame: 40
   ListDroprate:
-  - 100
+  - 0
   - 90
   - 0
   - 5

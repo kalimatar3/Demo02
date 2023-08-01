@@ -17,7 +17,7 @@ MonoBehaviour:
     Cost: 0
     Available: 1
   - Name: UnlockModel1
-    Cost: 1
+    Cost: 10
     Available: 0
   - Name: UnlockMap1
     Cost: 0

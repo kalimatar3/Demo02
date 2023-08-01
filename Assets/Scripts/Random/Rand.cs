@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Rand : MyBehaviour
 {
-    [SerializeField] protected List<float> thislist ;
+[SerializeField] protected List<float> thislist ;
 public static float UCLN(float a, float b)
 {
     while (a != b && b != 0 && a != 0)
@@ -17,6 +17,11 @@ public static float UCLN(float a, float b)
 public static float AddKey(List<float> List)
     {
         List<float> Listindex = new List<float>();
+        if(Listindex.Count > 0)
+        {
+            Listindex.Clear();
+        }
+
         int j = 0,dem = 0;
         for(int i = 0 ; i < List.Count; i++)
         {
@@ -29,6 +34,26 @@ public static float AddKey(List<float> List)
         }
         return Randominlist(Listindex);
     }
+    public static List<float> check(List<float> List)
+    {
+        List<float> Listindex = new List<float>();
+        if(Listindex.Count > 0)
+        {
+            Listindex.Clear();
+        }
+        int j = 0,dem = 0;
+        for(int i = 0 ; i < List.Count; i++)
+        {
+           while(j < dem + (int)(ListReng(List)*(Toint(List[i])/100f)))
+           {
+           Listindex.Add(i);
+            j++;
+           } 
+           dem = j;
+        }
+        return Listindex;
+    }
+
 public static float Randominlist(List<float> List)
     {
        int h = Random.Range(0,List.Count);
@@ -37,7 +62,7 @@ public static float Randominlist(List<float> List)
 public static float Toint(float h)
 {
     float a = h - (int)(h);
-    if( a > 0.5f) return (int) h +1;
+    if( a >= 0.5f) return (int) h + 1 ;
     if(a < 0.5f) return (int) h;
     else return h;
 }
@@ -80,8 +105,8 @@ public static float ListReng(List<float> List)
     float max =0;   
         for (int i= 0 ; i < List.Count; i++)
             {
-                if (100f/UCLN(100,Toint(List[i])) > max){
-                    max = 100/UCLN(100f,Toint(List[i]));
+                if (100f/UCLN(100f,Toint(List[i])) > max){
+                    max = 100f/UCLN(100f,Toint(List[i]));
                 }
             }
             return max;

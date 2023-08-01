@@ -25,10 +25,12 @@ public class ButtonScript : MyBehaviour
     }
     public void Showpanel(string panelname)
     {
+        this.Buttonsound();
         PanelCtrl.Instance.ShowPanel(panelname);
     }
     public void HirePanel(string Panelname)
     {
+        this.Buttonsound();
         PanelCtrl.Instance.HirePanel(Panelname);
     }
     public void ClearData()
@@ -77,7 +79,7 @@ public class ButtonScript : MyBehaviour
     public void LoadMap(Transform obj)
     {
         DataManager.Instance.CurrentMap = DataManager.Instance.GetReferanceName(obj);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        ScenesManager.Instance.LoadScene(SceneManager.GetActiveScene().name);
         Lsmanager.Instance.SaveGame();
     }
     public void LoadPlaeyrModel(Transform obj)
@@ -86,11 +88,13 @@ public class ButtonScript : MyBehaviour
     }
     public void Select()
     {
+        this.Buttonsound();
         Lsmanager.Instance.SaveGame();
         ModelManager.Instance.ActiveModel();
     }
     public void Buy()
     {
+        this.Buttonsound();
         DataManager.Instance.Unlock(Currentbutton);
         foreach(DataManager.ShopData element in DataManager.Instance.ListShopData)
         {
@@ -107,19 +111,24 @@ public class ButtonScript : MyBehaviour
     }
     public void InvulnerablePlayer()
     {
+        this.Buttonsound();
         EffectSpawner.Instance.Spawn(CONSTEffect.InvulnerableEffect,PlayerController.Instance.transform.position,Quaternion.identity);
         SoundSpawner.Instance.Spawn(CONSTSoundsName.Invulnerable,Vector3.zero,Quaternion.identity);
         PlayerController.Instance.PlayerReciver.invulnerable();
     }
     public void  GetCurrentButton(RectTransform obj)
     {
-        SoundSpawner.Instance.Spawn(CONSTSoundsName.ButtonTap,Vector3.zero,Quaternion.identity);
+        this.Buttonsound();
         if(!obj.gameObject.activeInHierarchy)
         {
             this.Currentbutton = null;
             return;
         }
         this.Currentbutton = obj;
+    }
+    protected void Buttonsound()
+    {
+        SoundSpawner.Instance.Spawn(CONSTSoundsName.ButtonTap,Vector3.zero,Quaternion.identity);
     }
     protected void FollowCurrentButton()
     {

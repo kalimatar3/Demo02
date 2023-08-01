@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnvironmentReciver : DameReciver
 {
+    public bool Camblock;
     protected override void LoadComponents()
     {
         base.LoadComponents();

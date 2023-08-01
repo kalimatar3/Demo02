@@ -53,10 +53,10 @@ public class Shooting : PlayerAct
     {
         if(CurrentAmmo < MaxAmmo) 
         {
-        SoundSpawner.Instance.Spawn(CONSTSoundsName.Reload,Vector3.zero,Quaternion.identity);
-        reloadtimer = Reloadtime;
-        Reloadgate = true;
-        Debug.Log(this.transform.parent + "Reloading");
+            SoundSpawner.Instance.Spawn(CONSTSoundsName.Reload,Vector3.zero,Quaternion.identity);
+            reloadtimer = Reloadtime;
+            Reloadgate = true;
+            Debug.Log(this.transform.parent + "Reloading");
         }
     }
     protected virtual void AutoReload()

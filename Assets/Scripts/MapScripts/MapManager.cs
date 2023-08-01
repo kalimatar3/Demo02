@@ -19,16 +19,31 @@ public class MapManager : MyBehaviour
     }
     public void LoadMap(string Mapname)
     {
+        Transform thisMap = null;
         string path = "Maps/" + Mapname;
         if(Resources.Load<Transform>(path) == null) Debug.LogWarning(this.transform + "Can load Resources " + Mapname);
-        Transform thisMap = Instantiate(Resources.Load<Transform>(path));
+        foreach(Transform element in this.transform)
+        {
+            if(Mapname == element.name)
+            {
+                thisMap = element;
+                return;
+            }
+        }
+        thisMap = Instantiate(Resources.Load<Transform>(path));
+        thisMap.name = Mapname;
+        thisMap.transform.SetParent(this.transform);
+        DontDestroyOnLoad(thisMap.transform.gameObject);
         Transform bossspawnPos = thisMap.transform.Find("BossSpawnPos");
         foreach(Transform element in bossspawnPos)
         {
             ListBossSapwnPos.Add(element.position);
         }
     }
-    protected IEnumerator DelayLoadMap()
+    protected void SpawnMap(string Mapname)
+    {
+    }
+    public IEnumerator DelayLoadMap()
     {
         yield return new WaitUntil( predicate: ()=>
         {

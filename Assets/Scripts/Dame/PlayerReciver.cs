@@ -59,7 +59,8 @@ public class PlayerReciver : DameReciver
     }
     protected void Replaying()
     {
-       SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+      ScenesManager.Instance.LoadScene(SceneManager.GetActiveScene().name);
+      this.StartCoroutine(MapManager.Instance.DelayLoadMap());
     }
     protected IEnumerator DelayReplayByGameOver()
     {

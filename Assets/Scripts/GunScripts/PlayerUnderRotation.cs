@@ -20,6 +20,10 @@ public class PlayerUnderRotation : MonoBehaviour
             }
             PlayerController.Instance.transform.rotation = Quaternion.LookRotation(Tip);
         }
+        else
+        {
+            this.transform.rotation = new Quaternion(0,0,0,0);
+        }
     }
     protected void FixedUpdate()
     {

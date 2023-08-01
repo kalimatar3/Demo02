@@ -13,4 +13,5 @@ public static class StringConts
     public static string PlayerIsDead = "PlayDead";
     public static string BossSpiderAnim = "BossSpiderState";
     public static string PlayerFacingAnim = "Facing";
+    public static string PlayerReload = "Reload";
 }

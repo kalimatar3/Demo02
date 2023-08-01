@@ -9,7 +9,7 @@ public class CameraFollow : followObj
     protected override void Start()
     {
         base.Start();
-        this.Forcus(this.transform.parent,0.2f);
+        this.Forcus(this.transform.parent,0);
     }
     protected override void follow()
     {

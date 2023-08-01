@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class SpawnDropItem : MyBehaviour
 {
+    public List<float> CheckList;
     public List<float> BaseListDropRate;
     [SerializeField] protected List<float> CurrentListDropRate;
     protected bool Gate;
+    [SerializeField] protected  List<float> Element;
     protected override void Start()
     {
         base.Start();
         StartCoroutine(this.DropRateChanceDelay());
+    }
+    protected void OnEnable()
+    {
+        Element.Clear();
     }
     protected void LoadCurrentListDropRate()
     {
@@ -21,7 +27,7 @@ public class SpawnDropItem : MyBehaviour
     }
     public void spawnBuff()
     {
-        List<float> Element = Rand.Main(CurrentListDropRate);
+        Element = Rand.Main(CurrentListDropRate);
         if(Element[0] <= 0) return;
         BuffSpawner.Instance.Spawn(BuffSpawner.Instance.Buffname[(int)Element[0]],this.transform.parent.position,Quaternion.identity);
         BuffManager.Instance.IncreaseCurrentNumberofBuff(BuffSpawner.Instance.Buffname[(int)Element[0]]);

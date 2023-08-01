@@ -5,13 +5,13 @@ public class PlayerMoving : MyBehaviour
 {
 [SerializeField] protected Rigidbody Mybody; 
 [SerializeField] protected float DefaultPlayerMovingSpeed;
-[SerializeField] protected float FirePLayerMovingSpeed;
+[SerializeField] protected float FireMoveRate;
 [SerializeField] protected PlayerController playerController;
-public Vector3 Move; 
 [HideInInspector] public float BoostValue,BoostTime;
 [SerializeField] protected float CurrentSpeed;
 protected float Timer,ExtraSpeed,soundtimer;
 protected bool LR;
+public Vector3 Move; 
     protected override void LoadComponents()
     {
         base.LoadComponents();
@@ -21,7 +21,7 @@ protected bool LR;
     }
     protected virtual void Moving()
     {
-        CurrentSpeed = DefaultPlayerMovingSpeed * ( 1 + ExtraSpeed);
+        CurrentSpeed = DefaultPlayerMovingSpeed   * ( 1 + ExtraSpeed) - FireMoveRate*DefaultPlayerMovingSpeed/100f;
         this.Move = new Vector3 (InputManager.Instance.MovingJoystick.Horizontal * CurrentSpeed, this.Mybody.velocity.y , InputManager.Instance.MovingJoystick.Vertical * CurrentSpeed);
         this.Mybody.velocity = Move;
         if(InputManager.Instance.MovingJoystick.gameObject.activeInHierarchy) 
@@ -35,6 +35,15 @@ protected bool LR;
         {
             this.Move = Vector3.zero;
             this.Mybody.velocity = Vector3.zero;
+        }
+        Vector3 ShootJoyVec = new Vector3 (InputManager.Instance.Shootingstick.Horizontal,0, InputManager.Instance.Shootingstick.Vertical);
+        if(ShootJoyVec.magnitude > 0)
+        {
+            FireMoveRate = 30;
+        }
+        else 
+        {
+            FireMoveRate = 0;
         }
     }
     protected void StepSound()

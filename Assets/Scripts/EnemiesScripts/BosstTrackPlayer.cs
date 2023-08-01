@@ -16,11 +16,11 @@ public class BosstTrackPlayer : TrackPlayer
             thisNav.SetDestination(PlayerController.Instance.transform.position);
             thisNav.speed = speed;
         }
-        if(Distance <= stopDis && EnemieCtrl.EnemieAct.gate)
+        if(Distance <= stopDis )
         {
             thisNav.SetDestination(this.transform.parent.position);
-            if(Vector3.Angle(Direction,this.transform.parent.forward) >= 90 || Vector3.Angle(Direction,this.transform.parent.forward) <= -90 )
-            this.transform.parent.forward = Vector3.Lerp(this.transform.parent.forward,Direction,Time.deltaTime * 1f);
+            if(Vector3.Angle(Direction,this.transform.parent.forward) >= 120 || Vector3.Angle(Direction,this.transform.parent.forward) <= -90 )
+            this.transform.parent.forward = Vector3.Lerp(this.transform.parent.forward,Direction,Time.deltaTime * 1f  * 3f);
             Tracking = false;
         }
     }

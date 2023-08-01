@@ -7,7 +7,7 @@ public class PlayerAnimation : MyBehaviour
     [SerializeField] protected PlayerController playerController;
     [SerializeField] protected Animator PlayerTopAnimator,PlayerUnderAnimator;
     [SerializeField] protected bool IsDeadAnim,facing;
-    protected float MoveAnim;
+    protected float MoveAnim,Reload;
     protected override void LoadComponents()
     {
         base.LoadComponents();
@@ -23,6 +23,11 @@ public class PlayerAnimation : MyBehaviour
         this.Moving();
         this.Attack();
         this.IsDead();
+        this.Reloading();
+    }
+    protected void Reloading()
+    {
+      PlayerTopAnimator.SetFloat(StringConts.PlayerReload,playerController.GunCtrl.Shooting.reloadtimer);
     }
     protected void IsDead()
     {
